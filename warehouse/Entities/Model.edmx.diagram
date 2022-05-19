@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8d042ce88450457cb7a6100e8824b74a" Name="Diagram1">
+        <EntityTypeShape EntityType="WarehouseModel.Booking" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.Customer" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.Discount" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.Goods" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.GoodsBooking" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.GoodsStorage" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.Price" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.Provider" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.Storage" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.Worker" Width="1.5" PointX="6" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseModel.WorkerBooking" Width="1.5" PointX="8.25" PointY="1.875" IsExpanded="true" />
+        <AssociationConnector Association="WarehouseModel.FK_GoodsBooking_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseModel.FK_WorkerBooking_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseModel.FK_Customer_Discount" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseModel.FK_GoodsBooking_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseModel.FK_Goods_Provider" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseModel.FK_GoodsBooking_Goods" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseModel.FK_GoodsStorage_Goods" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseModel.FK_Price_Goods" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseModel.FK_GoodsStorage_Storage" ManuallyRouted="false" />
+        <AssociationConnector Association="WarehouseModel.FK_WorkerBooking_Worker" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

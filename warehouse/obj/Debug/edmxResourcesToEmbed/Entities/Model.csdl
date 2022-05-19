@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WarehouseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookingDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="GoodsBooking" Relationship="Self.FK_GoodsBooking_Booking" FromRole="Booking" ToRole="GoodsBooking" />
+    <NavigationProperty Name="WorkerBooking" Relationship="Self.FK_WorkerBooking_Booking" FromRole="Booking" ToRole="WorkerBooking" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerSurname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerPatronymic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerPhoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerCity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerStreet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerHouse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerPostalCode" Type="Int32" />
+    <Property Name="DiscountId" Type="Int32" />
+    <NavigationProperty Name="Discount" Relationship="Self.FK_Customer_Discount" FromRole="Customer" ToRole="Discount" />
+    <NavigationProperty Name="GoodsBooking" Relationship="Self.FK_GoodsBooking_Customer" FromRole="Customer" ToRole="GoodsBooking" />
+  </EntityType>
+  <EntityType Name="Discount">
+    <Key>
+      <PropertyRef Name="DiscountId" />
+    </Key>
+    <Property Name="DiscountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DiscountPercent" Type="Int32" />
+    <Property Name="DiscountType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK_Customer_Discount" FromRole="Discount" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Goods">
+    <Key>
+      <PropertyRef Name="GoodsId" />
+    </Key>
+    <Property Name="GoodsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ProviderId" Type="Int32" />
+    <NavigationProperty Name="Provider" Relationship="Self.FK_Goods_Provider" FromRole="Goods" ToRole="Provider" />
+    <NavigationProperty Name="GoodsBooking" Relationship="Self.FK_GoodsBooking_Goods" FromRole="Goods" ToRole="GoodsBooking" />
+    <NavigationProperty Name="GoodsStorage" Relationship="Self.FK_GoodsStorage_Goods" FromRole="Goods" ToRole="GoodsStorage" />
+    <NavigationProperty Name="Price" Relationship="Self.FK_Price_Goods" FromRole="Goods" ToRole="Price" />
+  </EntityType>
+  <EntityType Name="GoodsBooking">
+    <Key>
+      <PropertyRef Name="GoodsBookingId" />
+    </Key>
+    <Property Name="GoodsBookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsId" Type="Int32" />
+    <Property Name="BookingId" Type="Int32" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="GoodsBookingAmount" Type="Int32" />
+    <NavigationProperty Name="Booking" Relationship="Self.FK_GoodsBooking_Booking" FromRole="GoodsBooking" ToRole="Booking" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK_GoodsBooking_Customer" FromRole="GoodsBooking" ToRole="Customer" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK_GoodsBooking_Goods" FromRole="GoodsBooking" ToRole="Goods" />
+  </EntityType>
+  <EntityType Name="GoodsStorage">
+    <Key>
+      <PropertyRef Name="GoodsStorageId" />
+    </Key>
+    <Property Name="GoodsStorageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsId" Type="Int32" />
+    <Property Name="GoodsStorageAmount" Type="Int32" />
+    <Property Name="StorageId" Type="Int32" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK_GoodsStorage_Goods" FromRole="GoodsStorage" ToRole="Goods" />
+    <NavigationProperty Name="Storage" Relationship="Self.FK_GoodsStorage_Storage" FromRole="GoodsStorage" ToRole="Storage" />
+  </EntityType>
+  <EntityType Name="Price">
+    <Key>
+      <PropertyRef Name="PriceId" />
+    </Key>
+    <Property Name="PriceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GoodsId" Type="Int32" />
+    <Property Name="PriceAmount" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK_Price_Goods" FromRole="Price" ToRole="Goods" />
+  </EntityType>
+  <EntityType Name="Provider">
+    <Key>
+      <PropertyRef Name="ProviderId" />
+    </Key>
+    <Property Name="ProviderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProviderName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK_Goods_Provider" FromRole="Provider" ToRole="Goods" />
+  </EntityType>
+  <EntityType Name="Storage">
+    <Key>
+      <PropertyRef Name="StorageId" />
+    </Key>
+    <Property Name="StorageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StorageName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="StorageCity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StorageStreet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StorageHouse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StoragePostalCode" Type="Int32" />
+    <NavigationProperty Name="GoodsStorage" Relationship="Self.FK_GoodsStorage_Storage" FromRole="Storage" ToRole="GoodsStorage" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Worker">
+    <Key>
+      <PropertyRef Name="WorkerId" />
+    </Key>
+    <Property Name="WorkerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WorkerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerSurname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerPatronymic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerPhoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="WorkerBirthDate" Type="DateTime" Precision="0" />
+    <Property Name="WorkerPosition" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="WorkerBooking" Relationship="Self.FK_WorkerBooking_Worker" FromRole="Worker" ToRole="WorkerBooking" />
+  </EntityType>
+  <EntityType Name="WorkerBooking">
+    <Key>
+      <PropertyRef Name="WorkerBookingId" />
+    </Key>
+    <Property Name="WorkerBookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WorkerId" Type="Int32" />
+    <Property Name="BookingId" Type="Int32" />
+    <NavigationProperty Name="Booking" Relationship="Self.FK_WorkerBooking_Booking" FromRole="WorkerBooking" ToRole="Booking" />
+    <NavigationProperty Name="Worker" Relationship="Self.FK_WorkerBooking_Worker" FromRole="WorkerBooking" ToRole="Worker" />
+  </EntityType>
+  <Association Name="FK_GoodsBooking_Booking">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+    <End Role="GoodsBooking" Type="Self.GoodsBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="GoodsBooking">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkerBooking_Booking">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+    <End Role="WorkerBooking" Type="Self.WorkerBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="WorkerBooking">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Discount">
+    <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discount">
+        <PropertyRef Name="DiscountId" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="DiscountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsBooking_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="GoodsBooking" Type="Self.GoodsBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="GoodsBooking">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Goods_Provider">
+    <End Role="Provider" Type="Self.Provider" Multiplicity="0..1" />
+    <End Role="Goods" Type="Self.Goods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provider">
+        <PropertyRef Name="ProviderId" />
+      </Principal>
+      <Dependent Role="Goods">
+        <PropertyRef Name="ProviderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsBooking_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="0..1" />
+    <End Role="GoodsBooking" Type="Self.GoodsBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="GoodsId" />
+      </Principal>
+      <Dependent Role="GoodsBooking">
+        <PropertyRef Name="GoodsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsStorage_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="0..1" />
+    <End Role="GoodsStorage" Type="Self.GoodsStorage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="GoodsId" />
+      </Principal>
+      <Dependent Role="GoodsStorage">
+        <PropertyRef Name="GoodsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Price_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="0..1" />
+    <End Role="Price" Type="Self.Price" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="GoodsId" />
+      </Principal>
+      <Dependent Role="Price">
+        <PropertyRef Name="GoodsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsStorage_Storage">
+    <End Role="Storage" Type="Self.Storage" Multiplicity="0..1" />
+    <End Role="GoodsStorage" Type="Self.GoodsStorage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Storage">
+        <PropertyRef Name="StorageId" />
+      </Principal>
+      <Dependent Role="GoodsStorage">
+        <PropertyRef Name="StorageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkerBooking_Worker">
+    <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
+    <End Role="WorkerBooking" Type="Self.WorkerBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Worker">
+        <PropertyRef Name="WorkerId" />
+      </Principal>
+      <Dependent Role="WorkerBooking">
+        <PropertyRef Name="WorkerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WarehouseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Booking" EntityType="Self.Booking" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" />
+    <EntitySet Name="Discount" EntityType="Self.Discount" />
+    <EntitySet Name="Goods" EntityType="Self.Goods" />
+    <EntitySet Name="GoodsBooking" EntityType="Self.GoodsBooking" />
+    <EntitySet Name="GoodsStorage" EntityType="Self.GoodsStorage" />
+    <EntitySet Name="Price" EntityType="Self.Price" />
+    <EntitySet Name="Provider" EntityType="Self.Provider" />
+    <EntitySet Name="Storage" EntityType="Self.Storage" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Worker" EntityType="Self.Worker" />
+    <EntitySet Name="WorkerBooking" EntityType="Self.WorkerBooking" />
+    <AssociationSet Name="FK_GoodsBooking_Booking" Association="Self.FK_GoodsBooking_Booking">
+      <End Role="Booking" EntitySet="Booking" />
+      <End Role="GoodsBooking" EntitySet="GoodsBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkerBooking_Booking" Association="Self.FK_WorkerBooking_Booking">
+      <End Role="Booking" EntitySet="Booking" />
+      <End Role="WorkerBooking" EntitySet="WorkerBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Discount" Association="Self.FK_Customer_Discount">
+      <End Role="Discount" EntitySet="Discount" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsBooking_Customer" Association="Self.FK_GoodsBooking_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="GoodsBooking" EntitySet="GoodsBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Goods_Provider" Association="Self.FK_Goods_Provider">
+      <End Role="Provider" EntitySet="Provider" />
+      <End Role="Goods" EntitySet="Goods" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsBooking_Goods" Association="Self.FK_GoodsBooking_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="GoodsBooking" EntitySet="GoodsBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsStorage_Goods" Association="Self.FK_GoodsStorage_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="GoodsStorage" EntitySet="GoodsStorage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Price_Goods" Association="Self.FK_Price_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="Price" EntitySet="Price" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsStorage_Storage" Association="Self.FK_GoodsStorage_Storage">
+      <End Role="Storage" EntitySet="Storage" />
+      <End Role="GoodsStorage" EntitySet="GoodsStorage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkerBooking_Worker" Association="Self.FK_WorkerBooking_Worker">
+      <End Role="Worker" EntitySet="Worker" />
+      <End Role="WorkerBooking" EntitySet="WorkerBooking" />
+    </AssociationSet>
+    <FunctionImport Name="ChangeGoodsAmountOnBooking">
+      <Parameter Name="Amount" Mode="In" Type="Int32" />
+      <Parameter Name="GoodsStorageId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NewBooking">
+      <Parameter Name="GoodsId" Mode="In" Type="Int32" />
+      <Parameter Name="BookingId" Mode="In" Type="Int32" />
+      <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+      <Parameter Name="GoodsBookingAmount" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="NewClient_">
+      <Parameter Name="CustomerName" Mode="In" Type="String" />
+      <Parameter Name="CustomerSurname" Mode="In" Type="String" />
+      <Parameter Name="CustomerPatronymic" Mode="In" Type="String" />
+      <Parameter Name="CustomerPhoneNumber" Mode="In" Type="String" />
+      <Parameter Name="CustomerCity" Mode="In" Type="String" />
+      <Parameter Name="CustomerStreet" Mode="In" Type="String" />
+      <Parameter Name="CustomerHouse" Mode="In" Type="String" />
+      <Parameter Name="CustomerPostalCode" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(WarehouseModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(WarehouseModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

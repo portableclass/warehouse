@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище WarehouseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookingDate" Type="date" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
+    <Property Name="CustomerSurname" Type="nvarchar" MaxLength="100" />
+    <Property Name="CustomerPatronymic" Type="nvarchar" MaxLength="100" />
+    <Property Name="CustomerPhoneNumber" Type="varchar" MaxLength="30" />
+    <Property Name="CustomerCity" Type="nvarchar" MaxLength="100" />
+    <Property Name="CustomerStreet" Type="nvarchar" MaxLength="100" />
+    <Property Name="CustomerHouse" Type="varchar" MaxLength="50" />
+    <Property Name="CustomerPostalCode" Type="int" />
+    <Property Name="DiscountId" Type="int" />
+  </EntityType>
+  <EntityType Name="Discount">
+    <Key>
+      <PropertyRef Name="DiscountId" />
+    </Key>
+    <Property Name="DiscountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DiscountPercent" Type="int" />
+    <Property Name="DiscountType" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Goods">
+    <Key>
+      <PropertyRef Name="GoodsId" />
+    </Key>
+    <Property Name="GoodsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GoodsName" Type="varchar" MaxLength="100" />
+    <Property Name="ProviderId" Type="int" />
+  </EntityType>
+  <EntityType Name="GoodsBooking">
+    <Key>
+      <PropertyRef Name="GoodsBookingId" />
+    </Key>
+    <Property Name="GoodsBookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GoodsId" Type="int" />
+    <Property Name="BookingId" Type="int" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="GoodsBookingAmount" Type="int" />
+  </EntityType>
+  <EntityType Name="GoodsStorage">
+    <Key>
+      <PropertyRef Name="GoodsStorageId" />
+    </Key>
+    <Property Name="GoodsStorageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GoodsId" Type="int" />
+    <Property Name="GoodsStorageAmount" Type="int" />
+    <Property Name="StorageId" Type="int" />
+  </EntityType>
+  <EntityType Name="Price">
+    <Key>
+      <PropertyRef Name="PriceId" />
+    </Key>
+    <Property Name="PriceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GoodsId" Type="int" />
+    <Property Name="PriceAmount" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Provider">
+    <Key>
+      <PropertyRef Name="ProviderId" />
+    </Key>
+    <Property Name="ProviderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProviderName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Storage">
+    <Key>
+      <PropertyRef Name="StorageId" />
+    </Key>
+    <Property Name="StorageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StorageName" Type="varchar" MaxLength="100" />
+    <Property Name="StorageCity" Type="nvarchar" MaxLength="100" />
+    <Property Name="StorageStreet" Type="nvarchar" MaxLength="100" />
+    <Property Name="StorageHouse" Type="varchar" MaxLength="50" />
+    <Property Name="StoragePostalCode" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Worker">
+    <Key>
+      <PropertyRef Name="WorkerId" />
+    </Key>
+    <Property Name="WorkerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkerName" Type="nvarchar" MaxLength="100" />
+    <Property Name="WorkerSurname" Type="nvarchar" MaxLength="100" />
+    <Property Name="WorkerPatronymic" Type="nvarchar" MaxLength="100" />
+    <Property Name="WorkerPhoneNumber" Type="varchar" MaxLength="30" />
+    <Property Name="WorkerBirthDate" Type="date" />
+    <Property Name="WorkerPosition" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="WorkerBooking">
+    <Key>
+      <PropertyRef Name="WorkerBookingId" />
+    </Key>
+    <Property Name="WorkerBookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkerId" Type="int" />
+    <Property Name="BookingId" Type="int" />
+  </EntityType>
+  <Association Name="FK_Customer_Discount">
+    <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discount">
+        <PropertyRef Name="DiscountId" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="DiscountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Goods_Provider">
+    <End Role="Provider" Type="Self.Provider" Multiplicity="0..1" />
+    <End Role="Goods" Type="Self.Goods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provider">
+        <PropertyRef Name="ProviderId" />
+      </Principal>
+      <Dependent Role="Goods">
+        <PropertyRef Name="ProviderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsBooking_Booking">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+    <End Role="GoodsBooking" Type="Self.GoodsBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="GoodsBooking">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsBooking_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="GoodsBooking" Type="Self.GoodsBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="GoodsBooking">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsBooking_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="0..1" />
+    <End Role="GoodsBooking" Type="Self.GoodsBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="GoodsId" />
+      </Principal>
+      <Dependent Role="GoodsBooking">
+        <PropertyRef Name="GoodsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsStorage_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="0..1" />
+    <End Role="GoodsStorage" Type="Self.GoodsStorage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="GoodsId" />
+      </Principal>
+      <Dependent Role="GoodsStorage">
+        <PropertyRef Name="GoodsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsStorage_Storage">
+    <End Role="Storage" Type="Self.Storage" Multiplicity="0..1" />
+    <End Role="GoodsStorage" Type="Self.GoodsStorage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Storage">
+        <PropertyRef Name="StorageId" />
+      </Principal>
+      <Dependent Role="GoodsStorage">
+        <PropertyRef Name="StorageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Price_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="0..1" />
+    <End Role="Price" Type="Self.Price" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="GoodsId" />
+      </Principal>
+      <Dependent Role="Price">
+        <PropertyRef Name="GoodsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkerBooking_Booking">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+    <End Role="WorkerBooking" Type="Self.WorkerBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="WorkerBooking">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkerBooking_Worker">
+    <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
+    <End Role="WorkerBooking" Type="Self.WorkerBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Worker">
+        <PropertyRef Name="WorkerId" />
+      </Principal>
+      <Dependent Role="WorkerBooking">
+        <PropertyRef Name="WorkerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="ChangeGoodsAmountOnBooking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Amount" Type="int" Mode="In" />
+    <Parameter Name="GoodsStorageId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="NewBooking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GoodsId" Type="int" Mode="In" />
+    <Parameter Name="BookingId" Type="int" Mode="In" />
+    <Parameter Name="CustomerId" Type="int" Mode="In" />
+    <Parameter Name="GoodsBookingAmount" Type="int" Mode="In" />
+  </Function>
+  <Function Name="NewClient_" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="NewClient ">
+    <Parameter Name="CustomerName" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomerSurname" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomerPatronymic" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomerPhoneNumber" Type="varchar" Mode="In" />
+    <Parameter Name="CustomerCity" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomerStreet" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomerHouse" Type="varchar" Mode="In" />
+    <Parameter Name="CustomerPostalCode" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="Хранилище WarehouseModelContainer">
+    <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Goods" EntityType="Self.Goods" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GoodsBooking" EntityType="Self.GoodsBooking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GoodsStorage" EntityType="Self.GoodsStorage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Storage" EntityType="Self.Storage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkerBooking" EntityType="Self.WorkerBooking" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Customer_Discount" Association="Self.FK_Customer_Discount">
+      <End Role="Discount" EntitySet="Discount" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Goods_Provider" Association="Self.FK_Goods_Provider">
+      <End Role="Provider" EntitySet="Provider" />
+      <End Role="Goods" EntitySet="Goods" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsBooking_Booking" Association="Self.FK_GoodsBooking_Booking">
+      <End Role="Booking" EntitySet="Booking" />
+      <End Role="GoodsBooking" EntitySet="GoodsBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsBooking_Customer" Association="Self.FK_GoodsBooking_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="GoodsBooking" EntitySet="GoodsBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsBooking_Goods" Association="Self.FK_GoodsBooking_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="GoodsBooking" EntitySet="GoodsBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsStorage_Goods" Association="Self.FK_GoodsStorage_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="GoodsStorage" EntitySet="GoodsStorage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsStorage_Storage" Association="Self.FK_GoodsStorage_Storage">
+      <End Role="Storage" EntitySet="Storage" />
+      <End Role="GoodsStorage" EntitySet="GoodsStorage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Price_Goods" Association="Self.FK_Price_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="Price" EntitySet="Price" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkerBooking_Booking" Association="Self.FK_WorkerBooking_Booking">
+      <End Role="Booking" EntitySet="Booking" />
+      <End Role="WorkerBooking" EntitySet="WorkerBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkerBooking_Worker" Association="Self.FK_WorkerBooking_Worker">
+      <End Role="Worker" EntitySet="Worker" />
+      <End Role="WorkerBooking" EntitySet="WorkerBooking" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
